@@ -1,0 +1,214 @@
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0a0a0f;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #1e1e2e;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #00F0FF;
+}
+
+/* Custom cursor */
+.cursor-glow {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #00F0FF;
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s ease-out, opacity 0.15s;
+    mix-blend-mode: difference;
+}
+
+.cursor-dot {
+    width: 4px;
+    height: 4px;
+    background: #00F0FF;
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+/* Glass morphism */
+.glass {
+    background: rgba(18, 18, 26, 0.7);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glass-card {
+    background: rgba(18, 18, 26, 0.6);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+    border-color: rgba(0, 240, 255, 0.3);
+    box-shadow: 0 0 40px rgba(0, 240, 255, 0.1);
+    transform: translateY(-4px);
+}
+
+/* Text gradient */
+.text-gradient {
+    background: linear-gradient(135deg, #00F0FF 0%, #7C3AED 50%, #00F0FF 100%);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradient 4s ease infinite;
+}
+
+/* Grid background */
+.grid-bg {
+    background-image:
+        linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+}
+
+/* Noise texture */
+.noise {
+    position: relative;
+}
+
+.noise::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.02'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Reveal animation */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Skill bar animation */
+.skill-bar {
+    height: 4px;
+    background: #1e1e2e;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.skill-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #00F0FF, #7C3AED);
+    border-radius: 2px;
+    width: 0;
+    transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Typing effect */
+.typing::after {
+    content: '|';
+    animation: blink 1s infinite;
+    color: #00F0FF;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+/* Glow effect */
+.glow {
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.3), 0 0 40px rgba(0, 240, 255, 0.1);
+}
+
+/* Button hover glow */
+.btn-glow {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-glow::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(45deg, #00F0FF, #7C3AED, #00F0FF);
+    border-radius: inherit;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.btn-glow:hover::before {
+    opacity: 1;
+}
+
+/* Project card */
+.project-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.project-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 50%, rgba(10, 10, 15, 0.9) 100%);
+    pointer-events: none;
+}
+
+/* Marquee */
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.marquee-track {
+    animation: marquee 30s linear infinite;
+}
+
+/* Smooth scroll */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Selection */
+::selection {
+    background: rgba(0, 240, 255, 0.3);
+    color: #fff;
+}
+
+/* Mobile cursor hide */
+@media (pointer: coarse) {
+
+    .cursor-glow,
+    .cursor-dot {
+        display: none;
+    }
+}

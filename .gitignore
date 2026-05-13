@@ -1,0 +1,16 @@
+# Environment
+.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# PHP sessions
+/tmp/

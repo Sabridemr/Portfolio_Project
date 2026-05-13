@@ -1,0 +1,7 @@
+Options -Indexes
+RewriteEngine On
+
+# Clean URL routes
+RewriteRule ^login$      /admin/login.php    [L]
+RewriteRule ^admin$      /admin/dashboard.php [L]
+RewriteRule ^dashboard$  /admin/dashboard.php [L]
