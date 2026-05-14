@@ -15,12 +15,22 @@ if (file_exists($envFile)) {
 }
 
 // ── Database Configuration ────────────────────────────────────
-// Support both custom DB_* vars and Railway's built-in MYSQL* vars
-define('DB_HOST',    getenv('DB_HOST')     ?: getenv('MYSQLHOST')     ?: '127.0.0.1');
-define('DB_PORT',    getenv('DB_PORT')     ?: getenv('MYSQLPORT')     ?: '3306');
-define('DB_USER',    getenv('DB_USER')     ?: getenv('MYSQLUSER')     ?: 'root');
-define('DB_PASS',    getenv('DB_PASSWORD') ?: getenv('MYSQLPASSWORD') ?: 'root123');
-define('DB_NAME',    getenv('DB_NAME')     ?: getenv('MYSQLDATABASE') ?: 'portfolio_db');
+// Parse DATABASE_URL (Railway public proxy) if available
+$dbUrl = getenv('DATABASE_URL') ?: getenv('MYSQL_URL') ?: '';
+if ($dbUrl) {
+    $p = parse_url($dbUrl);
+    define('DB_HOST',    $p['host']                           ?? '127.0.0.1');
+    define('DB_PORT',    (string)($p['port']                  ?? 3306));
+    define('DB_USER',    $p['user']                           ?? 'root');
+    define('DB_PASS',    $p['pass']                           ?? '');
+    define('DB_NAME',    ltrim($p['path'] ?? 'railway', '/'));
+} else {
+    define('DB_HOST',    getenv('DB_HOST')     ?: getenv('MYSQLHOST')     ?: '127.0.0.1');
+    define('DB_PORT',    getenv('DB_PORT')     ?: getenv('MYSQLPORT')     ?: '3306');
+    define('DB_USER',    getenv('DB_USER')     ?: getenv('MYSQLUSER')     ?: 'root');
+    define('DB_PASS',    getenv('DB_PASSWORD') ?: getenv('MYSQLPASSWORD') ?: 'root123');
+    define('DB_NAME',    getenv('DB_NAME')     ?: getenv('MYSQLDATABASE') ?: 'portfolio_db');
+}
 define('DB_CHARSET', 'utf8mb4');
 
 // ── Connection ────────────────────────────────────────────────
