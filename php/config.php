@@ -1,21 +1,25 @@
 <?php
-// ── Load .env file only if env vars not already set ───────────
+// ── Load .env file into environment (only if key not already set) ─
 $envFile = dirname(__DIR__) . '/.env';
-if (file_exists($envFile) && !getenv('DB_HOST')) {
+if (file_exists($envFile)) {
     foreach (file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $line) {
         if (str_starts_with(trim($line), '#') || !str_contains($line, '=')) continue;
         [$key, $val] = explode('=', $line, 2);
-        $_ENV[trim($key)] = trim($val);
-        putenv(trim($key) . '=' . trim($val));
+        $key = trim($key);
+        $val = trim($val);
+        if (getenv($key) === false) {
+            putenv("$key=$val");
+            $_ENV[$key] = $val;
+        }
     }
 }
 
 // ── Database Configuration ────────────────────────────────────
-define('DB_HOST',    $_ENV['DB_HOST']     ?? getenv('DB_HOST')     ?? '127.0.0.1');
-define('DB_PORT',    $_ENV['DB_PORT']     ?? getenv('DB_PORT')     ?? '3306');
-define('DB_USER',    $_ENV['DB_USER']     ?? getenv('DB_USER')     ?? 'root');
-define('DB_PASS',    $_ENV['DB_PASSWORD'] ?? getenv('DB_PASSWORD') ?? 'root123');
-define('DB_NAME',    $_ENV['DB_NAME']     ?? getenv('DB_NAME')     ?? 'portfolio_db');
+define('DB_HOST',    getenv('DB_HOST')     ?: '127.0.0.1');
+define('DB_PORT',    getenv('DB_PORT')     ?: '3306');
+define('DB_USER',    getenv('DB_USER')     ?: 'root');
+define('DB_PASS',    getenv('DB_PASSWORD') ?: 'root123');
+define('DB_NAME',    getenv('DB_NAME')     ?: 'portfolio_db');
 define('DB_CHARSET', 'utf8mb4');
 
 // ── Connection ────────────────────────────────────────────────
