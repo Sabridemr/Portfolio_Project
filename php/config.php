@@ -1,7 +1,7 @@
 <?php
-// ── Load .env file if exists ──────────────────────────────────
+// ── Load .env file only if env vars not already set ───────────
 $envFile = dirname(__DIR__) . '/.env';
-if (file_exists($envFile)) {
+if (file_exists($envFile) && !getenv('DB_HOST')) {
     foreach (file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $line) {
         if (str_starts_with(trim($line), '#') || !str_contains($line, '=')) continue;
         [$key, $val] = explode('=', $line, 2);
